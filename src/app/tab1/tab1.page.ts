@@ -17,7 +17,7 @@ import {
   IonInput,
   IonText,
   IonLabel,
-  IonButton, IonProgressBar
+  IonButton, IonProgressBar, IonSearchbar
 } from '@ionic/angular/standalone';
 import {ExploreContainerComponent} from '../explore-container/explore-container.component';
 import {CatsService} from "../services/cats/cats.service";
@@ -30,7 +30,7 @@ import {trendingDown} from "ionicons/icons";
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, AsyncPipe, NgForOf, IonGrid, IonRow, IonCol, IonItem, IonInput, IonText, IonLabel, IonButton, IonProgressBar, RouterLink],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, AsyncPipe, NgForOf, IonGrid, IonRow, IonCol, IonItem, IonInput, IonText, IonLabel, IonButton, IonProgressBar, RouterLink, IonSearchbar],
 })
 export class Tab1Page {
   cats$: Observable<any>;
@@ -61,5 +61,11 @@ export class Tab1Page {
         return 'success'; // green
       }
     }
+  }
+
+  handleSearch(event: CustomEvent) {
+    const search = event.detail.value.toLowerCase();
+    console.log("Search Input: " + search)
+    this.cats$ = this.CatsService.search$(search);
   }
 }

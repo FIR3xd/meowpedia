@@ -32,4 +32,30 @@ export class CatsService {
       }
     });
   }
+
+
+  search$(keyword:string){
+    if(keyword === ''){
+      return this.http.get(`${environment.apiUrl}/cats`, {
+        headers : {
+          'X-Api-Key': environment.apiKey
+        },
+        params: {
+          name: 'a',
+        }
+      });
+    }
+    else {
+      return this.http.get(`${environment.apiUrl}/cats`, {
+        headers : {
+          'X-Api-Key': environment.apiKey
+        },
+        params: {
+          name: keyword,
+        }
+      });
+    }
+
+
+  }
 }

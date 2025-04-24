@@ -4,6 +4,10 @@
       Cat List
     </ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="handleSearch($event)" [debounce]="300" animated="true" maxlength="500"
+                   show-clear-button="always"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
