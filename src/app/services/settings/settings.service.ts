@@ -20,19 +20,9 @@ export class SettingsService {
     return value;
   }
 
-  checkUserName = async () => {
-    const { value } = await Preferences.get({ key: 'username' });
 
-    console.log(`Hello ${value}!`);
-  };
-
-  async getSetting(key :string): Promise<any> {
-    const setting = this.getParam(key);
-    if(await setting === '' || setting == null){
-      return "Empty";
-    }
-    else{
-      return setting;
-    }
+  async getSetting(key: string): Promise<any> {
+    const value = await this.getParam(key);
+    return value === '' || value == null ? 'User' : value;
   }
 }

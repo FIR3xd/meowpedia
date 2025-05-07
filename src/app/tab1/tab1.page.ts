@@ -36,7 +36,7 @@ import {SettingsService} from "../services/settings/settings.service";
 })
 export class Tab1Page {
   private offset = 0;
-  username = signal('loading...');
+  username = signal('');
   cats$: Observable<any>;
 
   constructor(
