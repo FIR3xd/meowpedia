@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -26,21 +26,27 @@ import {AsyncPipe, NgForOf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {trendingDown} from "ionicons/icons";
 import {InfiniteScrollCustomEvent} from "@ionic/angular";
+import {SettingsService} from "../services/settings/settings.service";
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, AsyncPipe, NgForOf, IonGrid, IonRow, IonCol, IonItem, IonInput, IonText, IonLabel, IonButton, IonProgressBar, RouterLink, IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, AsyncPipe, NgForOf, IonInput, IonLabel, IonProgressBar, IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent],
 })
 export class Tab1Page {
   private offset = 0;
+  username = signal('loading...');
   cats$: Observable<any>;
 
   constructor(
     private CatsService: CatsService,
+    private settingsService: SettingsService,
   ) {
     this.cats$ = this.CatsService.cats$(0)
+    this.settingsService.getSetting('username').then((result) => {
+      this.username.set(result);
+    })
   }
 
   getBarColor(input: number, inverted: boolean): 'success' | 'warning' | 'danger' {
