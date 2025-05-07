@@ -9,9 +9,18 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
+      <ion-title size="large">Settings</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-list>
+    <ion-item>
+      <ion-input labelPlacement="stacked" label="Username" placeholder="Empty"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div class="ion-padding ion-text-center">
+    <ion-button fill="clear">Reset Settings</ion-button>
+    <ion-button>Save Settings</ion-button>
+  </div>
+
 </ion-content>
