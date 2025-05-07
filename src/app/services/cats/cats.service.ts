@@ -11,15 +11,28 @@ export class CatsService {
     private http: HttpClient
   ) { }
 
-  cats$(){
-    return this.http.get(`${environment.apiUrl}/cats`, {
-      headers : {
-        'X-Api-Key': environment.apiKey
-      },
-      params: {
-        name: 'a',
-      }
-    });
+  cats$(offset: number){
+    if (offset <= 0 || offset == null) {
+      return this.http.get(`${environment.apiUrl}/cats`, {
+        headers : {
+          'X-Api-Key': environment.apiKey
+        },
+        params: {
+          name: 'a',
+        }
+      });
+    }
+    else{
+      return this.http.get(`${environment.apiUrl}/cats`, {
+        headers : {
+          'X-Api-Key': environment.apiKey
+        },
+        params: {
+          name: 'a',
+          offset: offset,
+        }
+      });
+    }
   }
 
   cat(name:string){
