@@ -23,6 +23,6 @@ export class SettingsService {
 
   async getSetting(key: string): Promise<any> {
     const value = await this.getParam(key);
-    return value === '' || value == null ? 'User' : value;
+    return value === '' || value == null ? 'Empty' : value;
   }
 }
