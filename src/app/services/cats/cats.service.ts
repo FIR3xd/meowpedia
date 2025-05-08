@@ -12,28 +12,16 @@ export class CatsService {
     private http: HttpClient
   ) { }
 
-  cats$(offset: number): Observable<any> {
-    if (offset <= 0 || offset == null) {
-      return this.http.get(`${environment.apiUrl}/cats`, {
-        headers : {
-          'X-Api-Key': environment.apiKey
-        },
-        params: {
-          name: 'a',
-        }
-      });
-    }
-    else{
-      return this.http.get(`${environment.apiUrl}/cats`, {
-        headers : {
-          'X-Api-Key': environment.apiKey
-        },
-        params: {
-          name: 'a',
-          offset: offset,
-        }
-      });
-    }
+  cats$(offset: number): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/cats`, {
+      headers : {
+        'X-Api-Key': environment.apiKey
+      },
+      params: {
+        name: 'a',
+        offset: offset.toString(), // make sure it’s a string
+      }
+    });
   }
 
   cat(name:string){

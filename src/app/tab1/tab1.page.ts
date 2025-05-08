@@ -32,6 +32,7 @@ import {SettingsService} from "../services/settings/settings.service";
 })
 export class Tab1Page {
   private offset = 0;
+  pageSize: number = 20;
   username = signal('');
   private allCats: any[] = [];
   private catsSubject = new BehaviorSubject<any[]>([]);
@@ -88,12 +89,14 @@ export class Tab1Page {
 
 
   onIonInfinite(event: InfiniteScrollCustomEvent) {
-    this.offset++;
     this.CatsService.cats$(this.offset).subscribe((newCats: any[]) => {
-      this.allCats = [...this.allCats, ...newCats]; // append
-      this.catsSubject.next(this.allCats); // push updated list
+      if (!newCats || newCats.length === 0) {
+        event.target.disabled = true;
+      } else {
+        this.allCats = [...this.allCats, ...newCats];
+        this.offset += this.pageSize; // increment offset for next request
+      }
       event.target.complete();
-      console.log("Offset:", this.offset);
     });
   }
 
