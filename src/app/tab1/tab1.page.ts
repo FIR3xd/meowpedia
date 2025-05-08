@@ -19,7 +19,7 @@ import {
   IonRefresherContent
 } from '@ionic/angular/standalone';
 import {CatsService} from "../services/cats/cats.service";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {InfiniteScrollCustomEvent, RefresherCustomEvent} from "@ionic/angular";
 import {SettingsService} from "../services/settings/settings.service";
@@ -33,13 +33,20 @@ import {SettingsService} from "../services/settings/settings.service";
 export class Tab1Page {
   private offset = 0;
   username = signal('');
-  cats$: Observable<any>;
+  private allCats: any[] = [];
+  private catsSubject = new BehaviorSubject<any[]>([]);
+  cats$: Observable<any> = this.catsSubject.asObservable();
 
   constructor(
     private CatsService: CatsService,
     private settingsService: SettingsService,
   ) {
-    this.cats$ = this.CatsService.cats$(0)
+    this.CatsService.cats$(this.offset).subscribe((initialCats) => {
+      this.allCats = initialCats;
+      this.catsSubject.next(this.allCats);
+    });
+
+
     this.settingsService.getSetting('username').then((result) => {
       if (result == null || result == 'Empty') {
         this.username.set('User');
@@ -79,13 +86,15 @@ export class Tab1Page {
     this.cats$ = this.CatsService.search$(search);
   }
 
+
   onIonInfinite(event: InfiniteScrollCustomEvent) {
     this.offset++;
-    this.cats$ = this.CatsService.cats$(this.offset)
-    console.log("Offset: " + this.offset)
-    setTimeout(() => {
+    this.CatsService.cats$(this.offset).subscribe((newCats: any[]) => {
+      this.allCats = [...this.allCats, ...newCats]; // append
+      this.catsSubject.next(this.allCats); // push updated list
       event.target.complete();
-    }, 500);
+      console.log("Offset:", this.offset);
+    });
   }
 
   handleRefresh(event: RefresherCustomEvent) {

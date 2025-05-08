@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class CatsService {
     private http: HttpClient
   ) { }
 
-  cats$(offset: number){
+  cats$(offset: number): Observable<any> {
     if (offset <= 0 || offset == null) {
       return this.http.get(`${environment.apiUrl}/cats`, {
         headers : {
