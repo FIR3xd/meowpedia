@@ -47,15 +47,7 @@ export class Tab1Page {
       this.catsSubject.next(this.allCats);
     });
 
-
-    this.settingsService.getSetting('username').then((result) => {
-      if (result == null || result == 'Empty') {
-        this.username.set('User');
-      }
-      else {
-        this.username.set(result);
-      }
-    })
+    this.handleUserNameChange();
   }
 
 
@@ -87,6 +79,15 @@ export class Tab1Page {
     this.cats$ = this.CatsService.search$(search);
   }
 
+  handleUserNameChange() {
+    this.settingsService.getSetting('username').then((result) => {
+      if (result == null || result == 'Empty') {
+        this.username.set('User');
+      } else {
+        this.username.set(result);
+      }
+    })
+  }
 
   onIonInfinite(event: InfiniteScrollCustomEvent) {
     this.CatsService.cats$(this.offset).subscribe((newCats: any[]) => {
@@ -101,7 +102,12 @@ export class Tab1Page {
   }
 
   handleRefresh(event: RefresherCustomEvent) {
-    window.location.reload();
+    this.handleUserNameChange()
+    this.offset = 0;
+    this.CatsService.cats$(this.offset).subscribe((initialCats) => {
+      this.allCats = initialCats;
+      this.catsSubject.next(this.allCats);
+    });
     event.target.complete();
   }
 }
