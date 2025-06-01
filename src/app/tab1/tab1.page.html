@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Hello {{username()}}!</ion-title>
+      <ion-title size="large">Hello {{ username() }}!</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-list>
@@ -39,13 +39,14 @@
                           [color]="getBarColor(cat.pets_friendly, false)"></ion-progress-bar>
 
         <ion-label>Children Friendly</ion-label>
-        <ion-progress-bar [value]="cat.children_frienly / 5"
-                          [color]="getBarColor(cat.children_frienly, false)"></ion-progress-bar>
+        <ion-progress-bar [value]="cat.children_friendly / 5"
+                          [color]="getBarColor(cat.children_friendly, false)"></ion-progress-bar>
 
 
         <ion-input label="Origin" labelPlacement="stacked" value="{{cat.origin}}" [readonly]="true"></ion-input>
         <ion-input label="Length" labelPlacement="stacked" value="{{cat.length}}" [readonly]="true"></ion-input>
       </ion-card-content>
+      <ion-button (click)="handleFavorites(cat.name)" fill="clear">Add to favorites</ion-button>
     </ion-card>
   </ion-list>
 
@@ -54,7 +55,7 @@
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 </ion-content>

@@ -24,9 +24,9 @@ export class CatsService {
     });
   }
 
-  cat(name:string){
-    return this.http.get(`${environment.apiUrl}/cats`, {
-      headers : {
+  cat(name: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/cats`, {
+      headers: {
         'X-Api-Key': environment.apiKey
       },
       params: {

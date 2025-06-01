@@ -56,6 +56,7 @@ export class Tab3Page {
   saveUserName(event: CustomEvent) {
     const username = event.detail.value
     this.settingsService.setParam('username', username)
+    window.location.reload();
   }
 
 

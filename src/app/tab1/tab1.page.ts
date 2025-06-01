@@ -16,19 +16,20 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonRefresher,
-  IonRefresherContent
+  IonRefresherContent, IonButton, ToastController
 } from '@ionic/angular/standalone';
 import {CatsService} from "../services/cats/cats.service";
 import {BehaviorSubject, Observable} from "rxjs";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {InfiniteScrollCustomEvent, RefresherCustomEvent} from "@ionic/angular";
 import {SettingsService} from "../services/settings/settings.service";
+import {FavoritesService} from "../services/favorites/favorites.service";
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, AsyncPipe, NgForOf, IonInput, IonLabel, IonProgressBar, IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent, IonRefresher, IonRefresherContent],
+  imports: [IonHeader, IonToolbar , IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, AsyncPipe, NgForOf, IonInput, IonLabel, IonProgressBar, IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent, IonRefresher, IonRefresherContent, IonButton],
 })
 export class Tab1Page {
   private offset = 0;
@@ -41,6 +42,8 @@ export class Tab1Page {
   constructor(
     private CatsService: CatsService,
     private settingsService: SettingsService,
+    private favoritesService: FavoritesService,
+    private toastController: ToastController
   ) {
     this.CatsService.cats$(this.offset).subscribe((initialCats) => {
       this.allCats = initialCats;
@@ -50,6 +53,15 @@ export class Tab1Page {
     this.handleUserNameChange();
   }
 
+  async presentToast(message:string, position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500,
+      position: position,
+    });
+
+    await toast.present();
+  }
 
   getBarColor(input: number, inverted: boolean): 'success' | 'warning' | 'danger' {
     const value = input / 5;
@@ -109,5 +121,22 @@ export class Tab1Page {
       this.catsSubject.next(this.allCats);
     });
     event.target.complete();
+  }
+
+  handleFavorites(catId: string) {
+    this.favoritesService.isCatFavorite(catId).then(isFavorite => {
+      if (isFavorite) {
+        console.log('already favorite');
+        this.presentToast("Already in Favorites", "top")
+      }
+      else {
+        this.favoritesService.addCatToFavorites(catId).then(() => {
+          this.favoritesService.getFavoriteCats().then(favs => {
+            console.log(favs);
+          });
+        });
+        this.presentToast("Added to Favorites", "top")
+      }
+    });
   }
 }
