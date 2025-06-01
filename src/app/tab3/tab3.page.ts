@@ -9,7 +9,6 @@ import {
   IonInput,
   IonButton, IonAlert
 } from '@ionic/angular/standalone';
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import {SettingsService} from "../services/settings/settings.service";
 
 @Component({
