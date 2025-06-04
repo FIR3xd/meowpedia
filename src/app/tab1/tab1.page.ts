@@ -24,6 +24,7 @@ import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {InfiniteScrollCustomEvent, RefresherCustomEvent} from "@ionic/angular";
 import {SettingsService} from "../services/settings/settings.service";
 import {FavoritesService} from "../services/favorites/favorites.service";
+import {AdvicesService} from "../services/advices/advices.service";
 
 @Component({
   selector: 'app-tab1',
@@ -38,13 +39,16 @@ export class Tab1Page {
   private allCats: any[] = [];
   private catsSubject = new BehaviorSubject<any[]>([]);
   cats$: Observable<any> = this.catsSubject.asObservable();
+  advice:any = "";
 
   constructor(
     private CatsService: CatsService,
     private settingsService: SettingsService,
     private favoritesService: FavoritesService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private advicesService: AdvicesService
   ) {
+    this.loadAdvice();
     this.CatsService.cats$(this.offset).subscribe((initialCats) => {
       this.allCats = initialCats;
       this.catsSubject.next(this.allCats);
@@ -138,5 +142,12 @@ export class Tab1Page {
         this.presentToast("Added to Favorites", "top")
       }
     });
+  }
+
+  loadAdvice(){
+    this.advicesService.advice().subscribe(res => {
+      this.advice = res;
+    });
+    console.log(this.advice);
   }
 }

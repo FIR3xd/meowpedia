@@ -19,10 +19,11 @@
 
   <ng-container *ngIf="(cats$ | async) as cats">
     <div *ngIf="cats.length === 0"
-         style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+         style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 1rem; text-align: center;">
       <ion-spinner></ion-spinner>
       <ion-text color="medium">
         <p style="margin-top: 0.5rem;">Loading cats...</p>
+        <p style="max-width: 90%; word-wrap: break-word; overflow-wrap: break-word;">{{advice.advice}}</p>
       </ion-text>
     </div>
 
