@@ -6,7 +6,7 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar (ionInput)="handleSearch($event)" [debounce]="300" animated="true" maxlength="500"
-                   show-clear-button="always"></ion-searchbar>
+    show-clear-button="always"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +20,7 @@
   @if (cats$ | async; as cats) {
     @for (cat of cats; track cat.id) {
       // zde zobrazuji data, řádky
-    } @empty {
+      } @empty {
       // nic nenalezeno
     }
   } @else {
@@ -28,49 +28,49 @@
   }
   -->
   <div></div>
-  <ng-container *ngIf="(cats$ | async) as cats">
-    <div *ngIf="cats.length === 0"
-         style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 1rem; text-align: center;">
-      <ion-spinner></ion-spinner>
-      <ion-text color="medium">
-        <p style="margin-top: 0.5rem;">Loading cats...</p>
-        <p style="word-wrap: break-word; overflow-wrap: break-word;">{{ advice.advice }}</p>
-      </ion-text>
-    </div>
-
-    <ion-list *ngIf="cats.length > 0">
-      <ion-card *ngFor="let cat of cats">
-        <img alt="Cat Image" src="{{cat.image_link}}"/>
-        <ion-card-header>
-          <ion-card-title>{{ cat.name }} Cat</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-label>Shedding</ion-label>
-          <ion-progress-bar [value]="cat.shedding / 5" [color]="getBarColor(cat.shedding, true)"></ion-progress-bar>
-
-          <ion-label>Family Friendliness</ion-label>
-          <ion-progress-bar [value]="cat.family_friendly / 5"
-                            [color]="getBarColor(cat.family_friendly, false)"></ion-progress-bar>
-
-          <ion-label>Playfulness</ion-label>
-          <ion-progress-bar [value]="cat.playfulness / 5"
-                            [color]="getBarColor(cat.playfulness, false)"></ion-progress-bar>
-
-          <ion-label>Other Pets Friendly</ion-label>
-          <ion-progress-bar [value]="cat.pets_friendly / 5"
-                            [color]="getBarColor(cat.pets_friendly, false)"></ion-progress-bar>
-
-          <ion-label>Children Friendly</ion-label>
-          <ion-progress-bar [value]="cat.children_friendly / 5"
-                            [color]="getBarColor(cat.children_friendly, false)"></ion-progress-bar>
-
-          <ion-input label="Origin" labelPlacement="stacked" value="{{cat.origin}}" [readonly]="true"></ion-input>
-          <ion-input label="Length" labelPlacement="stacked" value="{{cat.length}}" [readonly]="true"></ion-input>
-        </ion-card-content>
-        <ion-button (click)="handleFavorites(cat.name)" fill="clear">Add to favorites</ion-button>
-      </ion-card>
-    </ion-list>
-  </ng-container>
+  @if ((cats$ | async); as cats) {
+    @if (cats.length === 0) {
+      <div
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 1rem; text-align: center;">
+        <ion-spinner></ion-spinner>
+        <ion-text color="medium">
+          <p style="margin-top: 0.5rem;">Loading cats...</p>
+          <p style="word-wrap: break-word; overflow-wrap: break-word;">{{ advice.advice }}</p>
+        </ion-text>
+      </div>
+    }
+    @if (cats.length > 0) {
+      <ion-list>
+        @for (cat of cats; track cat) {
+          <ion-card>
+            <img alt="Cat Image" src="{{cat.image_link}}"/>
+            <ion-card-header>
+              <ion-card-title>{{ cat.name }} Cat</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label>Shedding</ion-label>
+              <ion-progress-bar [value]="cat.shedding / 5" [color]="getBarColor(cat.shedding, true)"></ion-progress-bar>
+              <ion-label>Family Friendliness</ion-label>
+              <ion-progress-bar [value]="cat.family_friendly / 5"
+              [color]="getBarColor(cat.family_friendly, false)"></ion-progress-bar>
+              <ion-label>Playfulness</ion-label>
+              <ion-progress-bar [value]="cat.playfulness / 5"
+              [color]="getBarColor(cat.playfulness, false)"></ion-progress-bar>
+              <ion-label>Other Pets Friendly</ion-label>
+              <ion-progress-bar [value]="cat.pets_friendly / 5"
+              [color]="getBarColor(cat.pets_friendly, false)"></ion-progress-bar>
+              <ion-label>Children Friendly</ion-label>
+              <ion-progress-bar [value]="cat.children_friendly / 5"
+              [color]="getBarColor(cat.children_friendly, false)"></ion-progress-bar>
+              <ion-input label="Origin" labelPlacement="stacked" value="{{cat.origin}}" [readonly]="true"></ion-input>
+              <ion-input label="Length" labelPlacement="stacked" value="{{cat.length}}" [readonly]="true"></ion-input>
+            </ion-card-content>
+            <ion-button (click)="handleFavorites(cat.name)" fill="clear">Add to favorites</ion-button>
+          </ion-card>
+        }
+      </ion-list>
+    }
+  }
 
 
   <ion-infinite-scroll threshold="30%" (ionInfinite)="onIonInfinite($event)">

@@ -19,8 +19,8 @@ import {
   IonRefresherContent, IonButton, ToastController, IonText, IonSpinner
 } from '@ionic/angular/standalone';
 import {CatsService} from "../services/cats/cats.service";
-import {async, BehaviorSubject, Observable} from "rxjs";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {BehaviorSubject, Observable} from "rxjs";
+import { AsyncPipe } from "@angular/common";
 import {InfiniteScrollCustomEvent, RefresherCustomEvent} from "@ionic/angular";
 import {SettingsService} from "../services/settings/settings.service";
 import {FavoritesService} from "../services/favorites/favorites.service";
@@ -30,7 +30,7 @@ import {AdvicesService} from "../services/advices/advices.service";
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, AsyncPipe, NgForOf, IonInput, IonLabel, IonProgressBar, IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent, IonRefresher, IonRefresherContent, IonButton, NgIf, IonText, IonSpinner],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, AsyncPipe, IonInput, IonLabel, IonProgressBar, IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent, IonRefresher, IonRefresherContent, IonButton, IonText, IonSpinner],
 })
 export class Tab1Page {
   private offset = 0;
@@ -148,7 +148,4 @@ export class Tab1Page {
       }
     });
   }
-
-
-  protected readonly async = async;
 }

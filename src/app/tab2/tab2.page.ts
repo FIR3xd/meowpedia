@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component} from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -8,16 +8,16 @@ import {
   IonCard,
   IonCardContent, IonCardHeader, IonCardTitle, IonInput, IonLabel, IonList, IonProgressBar, IonText
 } from '@ionic/angular/standalone';
-import {forkJoin, map, Observable, of, switchMap, tap} from "rxjs";
+import {forkJoin, map, of, switchMap, tap} from "rxjs";
 import {FavoritesService} from "../services/favorites/favorites.service";
 import {CatsService} from "../services/cats/cats.service";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, AsyncPipe, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonInput, IonLabel, IonList, IonProgressBar, NgForOf, IonText, NgIf]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, AsyncPipe, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonInput, IonLabel, IonList, IonProgressBar, IonText]
 })
 export class Tab2Page {
   favCats$ = this.favoritesService.favCats$;
