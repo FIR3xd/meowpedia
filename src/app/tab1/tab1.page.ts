@@ -19,7 +19,7 @@ import {
   IonRefresherContent, IonButton, ToastController, IonText, IonSpinner
 } from '@ionic/angular/standalone';
 import {CatsService} from "../services/cats/cats.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {async, BehaviorSubject, Observable} from "rxjs";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {InfiniteScrollCustomEvent, RefresherCustomEvent} from "@ionic/angular";
 import {SettingsService} from "../services/settings/settings.service";
@@ -34,12 +34,12 @@ import {AdvicesService} from "../services/advices/advices.service";
 })
 export class Tab1Page {
   private offset = 0;
-  pageSize: number = 20;
-  username = signal('');
   private allCats: any[] = [];
   private catsSubject = new BehaviorSubject<any[]>([]);
+  username = signal('');
+  advice: any = this.advicesService.advice();
+  pageSize: number = 20;
   cats$: Observable<any> = this.catsSubject.asObservable();
-  advice:any = "";
 
   constructor(
     private CatsService: CatsService,
@@ -57,7 +57,7 @@ export class Tab1Page {
     this.handleUserNameChange();
   }
 
-  async presentToast(message:string, position: 'top' | 'middle' | 'bottom') {
+  async presentToast(message: string, position: 'top' | 'middle' | 'bottom') {
     const toast = await this.toastController.create({
       message: message,
       duration: 1500,
@@ -65,6 +65,12 @@ export class Tab1Page {
     });
 
     await toast.present();
+  }
+
+  loadAdvice() {
+    this.advicesService.advice().subscribe(res => {
+      this.advice = res;
+    });
   }
 
   getBarColor(input: number, inverted: boolean): 'success' | 'warning' | 'danger' {
@@ -132,8 +138,7 @@ export class Tab1Page {
       if (isFavorite) {
         console.log('already favorite');
         this.presentToast("Already in Favorites", "top")
-      }
-      else {
+      } else {
         this.favoritesService.addCatToFavorites(catId).then(() => {
           this.favoritesService.getFavoriteCats().then(favs => {
             console.log(favs);
@@ -144,10 +149,6 @@ export class Tab1Page {
     });
   }
 
-  loadAdvice(){
-    this.advicesService.advice().subscribe(res => {
-      this.advice = res;
-    });
-    console.log(this.advice);
-  }
+
+  protected readonly async = async;
 }

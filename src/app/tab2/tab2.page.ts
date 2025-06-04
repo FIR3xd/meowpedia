@@ -49,7 +49,6 @@ export class Tab2Page {
   constructor(
     private favoritesService: FavoritesService,
     private CatsService: CatsService,
-
   ) {
     this.favoritesService.loadFavorites();
     this.favCatObjects$.subscribe(cats => {

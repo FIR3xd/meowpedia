@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Preferences} from '@capacitor/preferences';
 import {BehaviorSubject} from "rxjs";
 
@@ -12,7 +12,7 @@ export class FavoritesService {
   private FAVORITES_KEY = 'favoriteCats';
 
   async loadFavorites() {
-    const { value } = await Preferences.get({ key: this.FAVORITES_KEY });
+    const {value} = await Preferences.get({key: this.FAVORITES_KEY});
     const favs = value ? JSON.parse(value) : [];
     this.favCatsSubject.next(favs);
   }
@@ -21,7 +21,7 @@ export class FavoritesService {
     const current = await this.getFavoriteCats();
     if (!current.includes(catId)) {
       current.push(catId);
-      await Preferences.set({ key: this.FAVORITES_KEY, value: JSON.stringify(current) });
+      await Preferences.set({key: this.FAVORITES_KEY, value: JSON.stringify(current)});
       this.favCatsSubject.next(current);
     }
   }
@@ -29,12 +29,12 @@ export class FavoritesService {
   async removeCatFromFavorites(catId: string) {
     let current = await this.getFavoriteCats();
     current = current.filter(id => id !== catId);
-    await Preferences.set({ key: this.FAVORITES_KEY, value: JSON.stringify(current) });
+    await Preferences.set({key: this.FAVORITES_KEY, value: JSON.stringify(current)});
     this.favCatsSubject.next(current);
   }
 
   async getFavoriteCats(): Promise<string[]> {
-    const { value } = await Preferences.get({ key: this.FAVORITES_KEY });
+    const {value} = await Preferences.get({key: this.FAVORITES_KEY});
     return value ? JSON.parse(value) : [];
   }
 

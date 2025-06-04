@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
@@ -10,11 +10,12 @@ export class CatsService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   cats$(offset: number): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}/cats`, {
-      headers : {
+      headers: {
         'X-Api-Key': environment.apiKey
       },
       params: {
@@ -36,20 +37,19 @@ export class CatsService {
   }
 
 
-  search$(keyword:string){
-    if(keyword === ''){
+  search$(keyword: string) {
+    if (keyword === '') {
       return this.http.get(`${environment.apiUrl}/cats`, {
-        headers : {
+        headers: {
           'X-Api-Key': environment.apiKey
         },
         params: {
           name: 'a',
         }
       });
-    }
-    else {
+    } else {
       return this.http.get(`${environment.apiUrl}/cats`, {
-        headers : {
+        headers: {
           'X-Api-Key': environment.apiKey
         },
         params: {
