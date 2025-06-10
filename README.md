@@ -1,5 +1,7 @@
 #  <img alt="AppIcon.png" height="50" src="ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon.png" title="Meowpedia Icon" width="50"/> Meowpedia
 
+### THIS IS THE LEGACY VERSION OF MEOWPEDIA
+
 Meowpedia is a simple and sassy cat wiki styled with sleek cards. It lets you explore various cat breeds, learn random facts about them, and of course, favorite the floofiest ones.
 
 ## ✨ Features (or lack thereof)
