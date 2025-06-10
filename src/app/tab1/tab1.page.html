@@ -16,18 +16,6 @@
       <ion-title size="large">Hello {{ username() }}!</ion-title>
     </ion-toolbar>
   </ion-header>
-  <!--
-  @if (cats$ | async; as cats) {
-    @for (cat of cats; track cat.id) {
-      // zde zobrazuji data, řádky
-      } @empty {
-      // nic nenalezeno
-    }
-  } @else {
-    // loader
-  }
-  -->
-  <div></div>
   @if ((cats$ | async); as cats) {
     @if (cats.length === 0) {
       <div
